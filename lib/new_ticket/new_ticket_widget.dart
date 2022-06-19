@@ -1,11 +1,14 @@
-import '../confirmation/confirmation_widget.dart';
+import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../ticket_list/ticket_list_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class NewTicketWidget extends StatefulWidget {
@@ -16,35 +19,35 @@ class NewTicketWidget extends StatefulWidget {
 }
 
 class _NewTicketWidgetState extends State<NewTicketWidget> {
-  String dropDownValue1;
-  TextEditingController textController3;
-  TextEditingController textController1;
-  TextEditingController textController2;
-  TextEditingController textController4;
-  String dropDownValue2;
-  TextEditingController textController5;
-  String dropDownValue3;
-  String dropDownValue4;
-  String dropDownValue5;
-  TextEditingController textController6;
-  String dropDownValue6;
-  String dropDownValue7;
-  TextEditingController textController7;
-  TextEditingController textController8;
+  DateTime datePicked1;
+  DateTime datePicked2;
+  String sourceDropDownValue;
+  TextEditingController userTextFieldController;
+  TextEditingController titleTextFieldController;
+  String statusDropDownValue;
+  TextEditingController ticketNumberTextFieldController;
+  TextEditingController actionTextFieldController;
+  String priorityDropDownValue;
+  String categoryDropDownValue;
+  String areaDropDownValue;
+  TextEditingController deviceTextFieldController;
+  String companyDropDownValue;
+  String assignedDropDownValue;
+  TextEditingController archiveTextFieldController;
+  TextEditingController infoTextTextFieldController;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    textController1 = TextEditingController();
-    textController2 = TextEditingController();
-    textController3 = TextEditingController();
-    textController4 = TextEditingController();
-    textController5 = TextEditingController();
-    textController6 = TextEditingController();
-    textController7 = TextEditingController();
-    textController8 = TextEditingController();
+    actionTextFieldController = TextEditingController();
+    ticketNumberTextFieldController = TextEditingController();
+    titleTextFieldController = TextEditingController();
+    userTextFieldController = TextEditingController();
+    deviceTextFieldController = TextEditingController();
+    archiveTextFieldController = TextEditingController();
+    infoTextTextFieldController = TextEditingController();
   }
 
   @override
@@ -84,677 +87,791 @@ class _NewTicketWidgetState extends State<NewTicketWidget> {
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Form(
-                key: formKey,
-                autovalidateMode: AutovalidateMode.disabled,
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                          child: Padding(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Form(
+                  key: formKey,
+                  autovalidateMode: AutovalidateMode.disabled,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                            child: TextFormField(
-                              controller: textController1,
-                              onChanged: (_) => EasyDebounce.debounce(
-                                'textController1',
-                                Duration(milliseconds: 2000),
-                                () => setState(() {}),
-                              ),
-                              autofocus: true,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                hintText: 'Date',
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
+                                EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                            child: FFButtonWidget(
+                              onPressed: () async {
+                                await DatePicker.showDateTimePicker(
+                                  context,
+                                  showTitleActions: true,
+                                  onConfirm: (date) {
+                                    setState(() => datePicked1 = date);
+                                  },
+                                  currentTime: getCurrentTimestamp,
+                                  minTime: getCurrentTimestamp,
+                                );
+                              },
+                              text: 'Date',
+                              options: FFButtonOptions(
+                                width: 130,
+                                height: 40,
+                                color: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
+                                textStyle:
+                                    FlutterFlowTheme.of(context).bodyText1,
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1,
                                 ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                contentPadding: EdgeInsetsDirectional.fromSTEB(
-                                    12, 4, 12, 4),
+                                borderRadius: 12,
                               ),
-                              style: FlutterFlowTheme.of(context).bodyText1,
-                              keyboardType: TextInputType.datetime,
                             ),
                           ),
-                        ),
-                        Expanded(
-                          child: Padding(
+                          Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 10, 10, 10),
-                            child: TextFormField(
-                              controller: textController2,
-                              onChanged: (_) => EasyDebounce.debounce(
-                                'textController2',
-                                Duration(milliseconds: 2000),
-                                () => setState(() {}),
-                              ),
-                              autofocus: true,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                hintText: 'Due',
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
+                                EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                            child: FFButtonWidget(
+                              onPressed: () async {
+                                await DatePicker.showDatePicker(
+                                  context,
+                                  showTitleActions: true,
+                                  onConfirm: (date) {
+                                    setState(() => datePicked2 = date);
+                                  },
+                                  currentTime: getCurrentTimestamp,
+                                  minTime: getCurrentTimestamp,
+                                );
+                              },
+                              text: 'Due',
+                              options: FFButtonOptions(
+                                width: 130,
+                                height: 40,
+                                color: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
+                                textStyle:
+                                    FlutterFlowTheme.of(context).bodyText1,
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1,
                                 ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                contentPadding: EdgeInsetsDirectional.fromSTEB(
-                                    12, 4, 12, 4),
+                                borderRadius: 12,
                               ),
-                              style: FlutterFlowTheme.of(context).bodyText1,
-                              keyboardType: TextInputType.datetime,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
-                            child: TextFormField(
-                              controller: textController3,
-                              onChanged: (_) => EasyDebounce.debounce(
-                                'textController3',
-                                Duration(milliseconds: 2000),
-                                () => setState(() {}),
-                              ),
-                              autofocus: true,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                hintText: 'User',
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                              child: TextFormField(
+                                controller: userTextFieldController,
+                                onChanged: (_) => EasyDebounce.debounce(
+                                  'userTextFieldController',
+                                  Duration(milliseconds: 2000),
+                                  () => setState(() {}),
                                 ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                contentPadding: EdgeInsetsDirectional.fromSTEB(
-                                    12, 4, 12, 4),
-                              ),
-                              style: FlutterFlowTheme.of(context).bodyText1,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 10),
-                          child: FlutterFlowDropDown(
-                            options: ['Email', 'In Person', 'Phone', 'Teams'],
-                            onChanged: (val) =>
-                                setState(() => dropDownValue1 = val),
-                            width: 180,
-                            height: 50,
-                            textStyle:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Poppins',
-                                      color: Colors.black,
+                                autofocus: true,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  hintText: 'User',
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
                                     ),
-                            hintText: 'Source',
-                            fillColor:
-                                FlutterFlowTheme.of(context).primaryBackground,
-                            elevation: 2,
-                            borderColor: Colors.transparent,
-                            borderWidth: 0,
-                            borderRadius: 0,
-                            margin:
-                                EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                            hidesUnderline: true,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
-                            child: TextFormField(
-                              controller: textController4,
-                              onChanged: (_) => EasyDebounce.debounce(
-                                'textController4',
-                                Duration(milliseconds: 2000),
-                                () => setState(() {}),
-                              ),
-                              autofocus: true,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                hintText: 'Title',
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
                                   ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
                                   ),
+                                  contentPadding:
+                                      EdgeInsetsDirectional.fromSTEB(
+                                          12, 4, 12, 4),
                                 ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                contentPadding: EdgeInsetsDirectional.fromSTEB(
-                                    12, 4, 12, 4),
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                                validator: (val) {
+                                  if (val == null || val.isEmpty) {
+                                    return 'Field is required';
+                                  }
+
+                                  return null;
+                                },
                               ),
-                              style: FlutterFlowTheme.of(context).bodyText1,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
-                          child: FlutterFlowDropDown(
-                            options: [
-                              'Archived',
-                              'Awaiting',
-                              'In Progress',
-                              'Office',
-                              'To Do'
-                            ],
-                            onChanged: (val) =>
-                                setState(() => dropDownValue2 = val),
-                            width: 180,
-                            height: 50,
-                            textStyle:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Poppins',
-                                      color: Colors.black,
-                                    ),
-                            hintText: 'Status',
-                            fillColor:
-                                FlutterFlowTheme.of(context).primaryBackground,
-                            elevation: 2,
-                            borderColor: Colors.transparent,
-                            borderWidth: 0,
-                            borderRadius: 0,
-                            margin:
-                                EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                            hidesUnderline: true,
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
+                          Padding(
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(0, 0, 10, 10),
-                            child: TextFormField(
-                              controller: textController5,
-                              onChanged: (_) => EasyDebounce.debounce(
-                                'textController5',
-                                Duration(milliseconds: 2000),
-                                () => setState(() {}),
-                              ),
-                              autofocus: true,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                hintText: 'Action',
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
+                            child: FlutterFlowDropDown(
+                              options: ['Email', 'In Person', 'Phone', 'Teams'],
+                              onChanged: (val) =>
+                                  setState(() => sourceDropDownValue = val),
+                              width: 180,
+                              height: 50,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.black,
                                   ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                contentPadding: EdgeInsetsDirectional.fromSTEB(
-                                    12, 4, 12, 4),
-                              ),
-                              style: FlutterFlowTheme.of(context).bodyText1,
+                              hintText: 'Source',
+                              fillColor: FlutterFlowTheme.of(context)
+                                  .primaryBackground,
+                              elevation: 2,
+                              borderColor: Colors.transparent,
+                              borderWidth: 0,
+                              borderRadius: 0,
+                              margin:
+                                  EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                              hidesUnderline: true,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
-                          child: FlutterFlowDropDown(
-                            options: [
-                              'Low',
-                              'Normal',
-                              'Notes',
-                              'Now',
-                              'Specific',
-                              'This Week',
-                              'Today'
-                            ],
-                            onChanged: (val) =>
-                                setState(() => dropDownValue3 = val),
-                            width: 180,
-                            height: 50,
-                            textStyle:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Poppins',
-                                      color: Colors.black,
+                        ],
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                              child: TextFormField(
+                                controller: titleTextFieldController,
+                                onChanged: (_) => EasyDebounce.debounce(
+                                  'titleTextFieldController',
+                                  Duration(milliseconds: 2000),
+                                  () => setState(() {}),
+                                ),
+                                autofocus: true,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  hintText: 'Title',
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
                                     ),
-                            hintText: 'Priority',
-                            fillColor:
-                                FlutterFlowTheme.of(context).primaryBackground,
-                            elevation: 2,
-                            borderColor: Colors.transparent,
-                            borderWidth: 0,
-                            borderRadius: 0,
-                            margin:
-                                EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                            hidesUnderline: true,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 10),
-                          child: FlutterFlowDropDown(
-                            options: [
-                              'Access Request',
-                              'Account',
-                              'Adobe',
-                              'Backup',
-                              'Citrix',
-                              'Database',
-                              'Email',
-                              'Exordia',
-                              'Hardware',
-                              'Invoices / Receipts',
-                              'Laptop',
-                              'Maintenance',
-                              'Mobiles',
-                              'Network',
-                              'Network Drives',
-                              'Office 365',
-                              'OneDrive',
-                              'Other',
-                              'Phones',
-                              'PO System',
-                              'Printers',
-                              'Request',
-                              'Sage',
-                              'Server',
-                              'SharePoint',
-                              'Software',
-                              'Syrinx',
-                              'Tablets',
-                              'Teams',
-                              'Websites'
-                            ],
-                            onChanged: (val) =>
-                                setState(() => dropDownValue4 = val),
-                            width: 180,
-                            height: 50,
-                            textStyle:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Poppins',
-                                      color: Colors.black,
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
                                     ),
-                            hintText: 'Category',
-                            fillColor:
-                                FlutterFlowTheme.of(context).primaryBackground,
-                            elevation: 2,
-                            borderColor: Colors.transparent,
-                            borderWidth: 0,
-                            borderRadius: 0,
-                            margin:
-                                EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                            hidesUnderline: true,
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  contentPadding:
+                                      EdgeInsetsDirectional.fromSTEB(
+                                          12, 4, 12, 4),
+                                ),
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                                validator: (val) {
+                                  if (val == null || val.isEmpty) {
+                                    return 'Field is required';
+                                  }
+
+                                  return null;
+                                },
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                          child: Padding(
+                        ],
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
-                            child: TextFormField(
-                              controller: textController6,
-                              onChanged: (_) => EasyDebounce.debounce(
-                                'textController6',
-                                Duration(milliseconds: 2000),
-                                () => setState(() {}),
-                              ),
-                              autofocus: true,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                hintText: 'Device',
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
+                            child: FlutterFlowDropDown(
+                              options: [
+                                'Archived',
+                                'Awaiting',
+                                'In Progress',
+                                'Office',
+                                'To Do'
+                              ],
+                              onChanged: (val) =>
+                                  setState(() => statusDropDownValue = val),
+                              width: 180,
+                              height: 50,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.black,
                                   ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                contentPadding: EdgeInsetsDirectional.fromSTEB(
-                                    12, 4, 12, 4),
-                              ),
-                              style: FlutterFlowTheme.of(context).bodyText1,
+                              hintText: 'Status',
+                              fillColor: FlutterFlowTheme.of(context)
+                                  .primaryBackground,
+                              elevation: 2,
+                              borderColor: Colors.transparent,
+                              borderWidth: 0,
+                              borderRadius: 0,
+                              margin:
+                                  EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                              hidesUnderline: true,
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 10),
-                          child: FlutterFlowDropDown(
-                            options: [
-                              'Aberdeen',
-                              'Brasil',
-                              'Chesterfield',
-                              'Clydeside',
-                              'Ghana',
-                              'Ithaca',
-                              'Offshore',
-                              'Perth',
-                              'Radio Design',
-                              'Scottish Parliment'
-                            ],
-                            onChanged: (val) =>
-                                setState(() => dropDownValue5 = val),
-                            width: 180,
-                            height: 50,
-                            textStyle:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Poppins',
-                                      color: Colors.black,
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 10, 10),
+                              child: TextFormField(
+                                controller: ticketNumberTextFieldController,
+                                onChanged: (_) => EasyDebounce.debounce(
+                                  'ticketNumberTextFieldController',
+                                  Duration(milliseconds: 2000),
+                                  () => setState(() {}),
+                                ),
+                                autofocus: true,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  hintText: 'Ticket #',
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
                                     ),
-                            hintText: 'Area',
-                            fillColor:
-                                FlutterFlowTheme.of(context).primaryBackground,
-                            elevation: 2,
-                            borderColor: Colors.transparent,
-                            borderWidth: 0,
-                            borderRadius: 0,
-                            margin:
-                                EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                            hidesUnderline: true,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 10),
-                          child: FlutterFlowDropDown(
-                            options: [
-                              'Energy',
-                              'Engineering',
-                              'International',
-                              'Oil & Gas',
-                              'Radio Design',
-                              'Renewables'
-                            ],
-                            onChanged: (val) =>
-                                setState(() => dropDownValue6 = val),
-                            width: 180,
-                            height: 50,
-                            textStyle:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Poppins',
-                                      color: Colors.black,
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
                                     ),
-                            hintText: 'Company',
-                            fillColor:
-                                FlutterFlowTheme.of(context).primaryBackground,
-                            elevation: 2,
-                            borderColor: Colors.transparent,
-                            borderWidth: 0,
-                            borderRadius: 0,
-                            margin:
-                                EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                            hidesUnderline: true,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
-                          child: FlutterFlowDropDown(
-                            options: ['Ayla', 'Shiny'],
-                            onChanged: (val) =>
-                                setState(() => dropDownValue7 = val),
-                            width: 180,
-                            height: 50,
-                            textStyle:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Poppins',
-                                      color: Colors.black,
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
                                     ),
-                            hintText: 'Assigned',
-                            fillColor:
-                                FlutterFlowTheme.of(context).primaryBackground,
-                            elevation: 2,
-                            borderColor: Colors.transparent,
-                            borderWidth: 0,
-                            borderRadius: 0,
-                            margin:
-                                EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                            hidesUnderline: true,
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  contentPadding:
+                                      EdgeInsetsDirectional.fromSTEB(
+                                          12, 4, 12, 4),
+                                ),
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                              ),
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          child: Padding(
+                        ],
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                              child: TextFormField(
+                                controller: actionTextFieldController,
+                                onChanged: (_) => EasyDebounce.debounce(
+                                  'actionTextFieldController',
+                                  Duration(milliseconds: 2000),
+                                  () => setState(() {}),
+                                ),
+                                autofocus: true,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  hintText: 'Action',
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  contentPadding:
+                                      EdgeInsetsDirectional.fromSTEB(
+                                          12, 4, 12, 4),
+                                ),
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                                validator: (val) {
+                                  if (val == null || val.isEmpty) {
+                                    return 'Field is required';
+                                  }
+
+                                  return null;
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                            child: FlutterFlowDropDown(
+                              options: [
+                                'Low',
+                                'Normal',
+                                'Notes',
+                                'Now',
+                                'Specific',
+                                'This Week',
+                                'Today'
+                              ],
+                              onChanged: (val) =>
+                                  setState(() => priorityDropDownValue = val),
+                              width: 180,
+                              height: 50,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.black,
+                                  ),
+                              hintText: 'Priority',
+                              fillColor: FlutterFlowTheme.of(context)
+                                  .primaryBackground,
+                              elevation: 2,
+                              borderColor: Colors.transparent,
+                              borderWidth: 0,
+                              borderRadius: 0,
+                              margin:
+                                  EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                              hidesUnderline: true,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                            child: FlutterFlowDropDown(
+                              options: [
+                                'Access Request',
+                                'Account',
+                                'Adobe',
+                                'Backup',
+                                'Citrix',
+                                'Database',
+                                'Email',
+                                'Exordia',
+                                'Hardware',
+                                'Invoices / Receipts',
+                                'Laptop',
+                                'Maintenance',
+                                'Mobiles',
+                                'Network',
+                                'Network Drives',
+                                'Office 365',
+                                'OneDrive',
+                                'Other',
+                                'Phones',
+                                'PO System',
+                                'Printers',
+                                'Request',
+                                'Sage',
+                                'Server',
+                                'SharePoint',
+                                'Software',
+                                'Syrinx',
+                                'Tablets',
+                                'Teams',
+                                'Websites'
+                              ],
+                              onChanged: (val) =>
+                                  setState(() => categoryDropDownValue = val),
+                              width: 180,
+                              height: 50,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.black,
+                                  ),
+                              hintText: 'Category',
+                              fillColor: FlutterFlowTheme.of(context)
+                                  .primaryBackground,
+                              elevation: 2,
+                              borderColor: Colors.transparent,
+                              borderWidth: 0,
+                              borderRadius: 0,
+                              margin:
+                                  EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                              hidesUnderline: true,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                              child: TextFormField(
+                                controller: deviceTextFieldController,
+                                onChanged: (_) => EasyDebounce.debounce(
+                                  'deviceTextFieldController',
+                                  Duration(milliseconds: 2000),
+                                  () => setState(() {}),
+                                ),
+                                autofocus: true,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  hintText: 'Device',
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  contentPadding:
+                                      EdgeInsetsDirectional.fromSTEB(
+                                          12, 4, 12, 4),
+                                ),
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                                validator: (val) {
+                                  if (val == null || val.isEmpty) {
+                                    return 'Field is required';
+                                  }
+
+                                  return null;
+                                },
+                              ),
+                            ),
+                          ),
+                          Padding(
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(0, 0, 10, 10),
-                            child: TextFormField(
-                              controller: textController7,
-                              onChanged: (_) => EasyDebounce.debounce(
-                                'textController7',
-                                Duration(milliseconds: 2000),
-                                () => setState(() {}),
-                              ),
-                              autofocus: true,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                hintText: 'Archive',
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
+                            child: FlutterFlowDropDown(
+                              options: [
+                                'Aberdeen',
+                                'Brasil',
+                                'Chesterfield',
+                                'Clydeside',
+                                'Ghana',
+                                'Ithaca',
+                                'Offshore',
+                                'Perth',
+                                'Radio Design',
+                                'Scottish Parliment'
+                              ],
+                              onChanged: (val) =>
+                                  setState(() => areaDropDownValue = val),
+                              width: 180,
+                              height: 50,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.black,
                                   ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                contentPadding: EdgeInsetsDirectional.fromSTEB(
-                                    12, 4, 12, 4),
-                              ),
-                              style: FlutterFlowTheme.of(context).bodyText1,
-                              keyboardType: TextInputType.number,
+                              hintText: 'Area',
+                              fillColor: FlutterFlowTheme.of(context)
+                                  .primaryBackground,
+                              elevation: 2,
+                              borderColor: Colors.transparent,
+                              borderWidth: 0,
+                              borderRadius: 0,
+                              margin:
+                                  EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                              hidesUnderline: true,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                          child: Padding(
+                        ],
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 0, 10),
+                            child: FlutterFlowDropDown(
+                              options: [
+                                'Energy',
+                                'Engineering',
+                                'International',
+                                'Oil & Gas',
+                                'Radio Design',
+                                'Renewables'
+                              ],
+                              onChanged: (val) =>
+                                  setState(() => companyDropDownValue = val),
+                              width: 180,
+                              height: 50,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.black,
+                                  ),
+                              hintText: 'Company',
+                              fillColor: FlutterFlowTheme.of(context)
+                                  .primaryBackground,
+                              elevation: 2,
+                              borderColor: Colors.transparent,
+                              borderWidth: 0,
+                              borderRadius: 0,
+                              margin:
+                                  EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                              hidesUnderline: true,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
-                            child: TextFormField(
-                              controller: textController8,
-                              onChanged: (_) => EasyDebounce.debounce(
-                                'textController8',
-                                Duration(milliseconds: 2000),
-                                () => setState(() {}),
-                              ),
-                              autofocus: true,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                hintText: 'Notes',
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
+                            child: FlutterFlowDropDown(
+                              options: ['Ayla', 'Shiny'],
+                              onChanged: (val) =>
+                                  setState(() => assignedDropDownValue = val),
+                              width: 180,
+                              height: 50,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.black,
                                   ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                contentPadding: EdgeInsetsDirectional.fromSTEB(
-                                    12, 4, 12, 4),
-                              ),
-                              style: FlutterFlowTheme.of(context).bodyText1,
-                              keyboardType: TextInputType.multiline,
+                              hintText: 'Assigned',
+                              fillColor: FlutterFlowTheme.of(context)
+                                  .primaryBackground,
+                              elevation: 2,
+                              borderColor: Colors.transparent,
+                              borderWidth: 0,
+                              borderRadius: 0,
+                              margin:
+                                  EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                              hidesUnderline: true,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Align(
-                      alignment: AlignmentDirectional(0, 0),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                        child: FFButtonWidget(
-                          onPressed: () async {
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ConfirmationWidget(),
-                              ),
-                            );
-                          },
-                          text: 'Save',
-                          options: FFButtonOptions(
-                            width: 130,
-                            height: 40,
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            textStyle:
-                                FlutterFlowTheme.of(context).subtitle2.override(
-                                      fontFamily: 'Poppins',
-                                      color: Colors.white,
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 10, 10),
+                              child: TextFormField(
+                                controller: archiveTextFieldController,
+                                onChanged: (_) => EasyDebounce.debounce(
+                                  'archiveTextFieldController',
+                                  Duration(milliseconds: 2000),
+                                  () => setState(() {}),
+                                ),
+                                autofocus: true,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  hintText: 'Archive',
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
                                     ),
-                            borderSide: BorderSide(
-                              color: Colors.transparent,
-                              width: 1,
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  contentPadding:
+                                      EdgeInsetsDirectional.fromSTEB(
+                                          12, 4, 12, 4),
+                                ),
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                                keyboardType: TextInputType.number,
+                                validator: (val) {
+                                  if (val == null || val.isEmpty) {
+                                    return 'Field is required';
+                                  }
+
+                                  return null;
+                                },
+                              ),
                             ),
-                            borderRadius: 12,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                              child: TextFormField(
+                                controller: infoTextTextFieldController,
+                                onChanged: (_) => EasyDebounce.debounce(
+                                  'infoTextTextFieldController',
+                                  Duration(milliseconds: 2000),
+                                  () => setState(() {}),
+                                ),
+                                autofocus: true,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  hintText: 'Info Text',
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  contentPadding:
+                                      EdgeInsetsDirectional.fromSTEB(
+                                          12, 4, 12, 4),
+                                ),
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                                keyboardType: TextInputType.multiline,
+                                validator: (val) {
+                                  if (val == null || val.isEmpty) {
+                                    return 'Field is required';
+                                  }
+
+                                  return null;
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Align(
+                        alignment: AlignmentDirectional(0, 0),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 20),
+                          child: FFButtonWidget(
+                            onPressed: () async {
+                              final ticketsCreateData = createTicketsRecordData(
+                                action: actionTextFieldController.text,
+                                date: datePicked1,
+                                due: datePicked2,
+                                source: sourceDropDownValue,
+                                status: statusDropDownValue,
+                                ticketNumber: int.parse(
+                                    ticketNumberTextFieldController.text),
+                                title: titleTextFieldController.text,
+                                user: userTextFieldController.text,
+                                priority: priorityDropDownValue,
+                                category: categoryDropDownValue,
+                                device: deviceTextFieldController.text,
+                                area: areaDropDownValue,
+                                company: companyDropDownValue,
+                                assigned: assignedDropDownValue,
+                                archive:
+                                    int.parse(archiveTextFieldController.text),
+                                infoText: infoTextTextFieldController.text,
+                              );
+                              await TicketsRecord.collection
+                                  .doc()
+                                  .set(ticketsCreateData);
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => TicketListWidget(),
+                                ),
+                              );
+                            },
+                            text: 'Save',
+                            options: FFButtonOptions(
+                              width: 130,
+                              height: 40,
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .subtitle2
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.white,
+                                  ),
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                                width: 1,
+                              ),
+                              borderRadius: 12,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

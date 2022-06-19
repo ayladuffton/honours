@@ -56,6 +56,9 @@ abstract class TicketsRecord
   int get archive;
 
   @nullable
+  String get infoText;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
@@ -72,7 +75,8 @@ abstract class TicketsRecord
     ..area = ''
     ..company = ''
     ..assigned = ''
-    ..archive = 0;
+    ..archive = 0
+    ..infoText = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('Tickets');
@@ -111,6 +115,7 @@ Map<String, dynamic> createTicketsRecordData({
   String company,
   String assigned,
   int archive,
+  String infoText,
 }) =>
     serializers.toFirestore(
         TicketsRecord.serializer,
@@ -129,4 +134,5 @@ Map<String, dynamic> createTicketsRecordData({
           ..area = area
           ..company = company
           ..assigned = assigned
-          ..archive = archive));
+          ..archive = archive
+          ..infoText = infoText));

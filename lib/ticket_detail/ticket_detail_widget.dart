@@ -236,6 +236,20 @@ class _TicketDetailWidgetState extends State<TicketDetailWidget> {
                       ),
                     ),
                     Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'Ticket Information:  ${ticketDetailTicketsRecord.infoText}',
+                              style: FlutterFlowTheme.of(context).bodyText1,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,

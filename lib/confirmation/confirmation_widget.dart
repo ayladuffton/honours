@@ -1,6 +1,7 @@
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../ticket_list/ticket_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -32,7 +33,12 @@ class _ConfirmationWidgetState extends State<ConfirmationWidget> {
             size: 30,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TicketListWidget(),
+              ),
+            );
           },
         ),
         title: Text(
