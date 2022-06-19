@@ -80,7 +80,10 @@ class _TicketListWidgetState extends State<TicketListWidget> {
                   child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                     child: StreamBuilder<List<TicketsRecord>>(
-                      stream: queryTicketsRecord(),
+                      stream: queryTicketsRecord(
+                        queryBuilder: (ticketsRecord) => ticketsRecord
+                            .orderBy('ticketNumber', descending: true),
+                      ),
                       builder: (context, snapshot) {
                         // Customize what your widget looks like when it's loading.
                         if (!snapshot.hasData) {

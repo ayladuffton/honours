@@ -14,5 +14,17 @@ service cloud.firestore {
       allow write: if false;
       allow delete: if false;
     }
+
+    match /Tickets/{parent}/TicketNotes/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if false;
+      allow delete: if false;
+    }
+
+    match /{path=**}/TicketNotes/{document} {
+      allow read: if true;
+    }
+
   }
 }

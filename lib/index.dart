@@ -5,3 +5,4 @@ export 'ticket_detail/ticket_detail_widget.dart' show TicketDetailWidget;
 export 'new_ticket/new_ticket_widget.dart' show NewTicketWidget;
 export 'ticket_changes/ticket_changes_widget.dart' show TicketChangesWidget;
 export 'confirmation/confirmation_widget.dart' show ConfirmationWidget;
+export 'add_notes/add_notes_widget.dart' show AddNotesWidget;

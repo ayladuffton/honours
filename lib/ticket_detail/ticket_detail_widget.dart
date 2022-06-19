@@ -1,3 +1,4 @@
+import '../add_notes/add_notes_widget.dart';
 import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -13,9 +14,11 @@ class TicketDetailWidget extends StatefulWidget {
   const TicketDetailWidget({
     Key key,
     this.ticketDocRef,
+    this.ticketNoteRef,
   }) : super(key: key);
 
   final DocumentReference ticketDocRef;
+  final DocumentReference ticketNoteRef;
 
   @override
   _TicketDetailWidgetState createState() => _TicketDetailWidgetState();
@@ -250,6 +253,77 @@ class _TicketDetailWidgetState extends State<TicketDetailWidget> {
                       ),
                     ),
                     Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 20),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          FFButtonWidget(
+                            onPressed: () async {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => TicketChangesWidget(
+                                    ticketDocRef:
+                                        ticketDetailTicketsRecord.reference,
+                                  ),
+                                ),
+                              );
+                            },
+                            text: 'Amend Ticket',
+                            options: FFButtonOptions(
+                              width: 130,
+                              height: 40,
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .subtitle2
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                  ),
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                                width: 1,
+                              ),
+                              borderRadius: 12,
+                            ),
+                          ),
+                          FFButtonWidget(
+                            onPressed: () async {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AddNotesWidget(
+                                    ticketDocRef:
+                                        ticketDetailTicketsRecord.reference,
+                                  ),
+                                ),
+                              );
+                            },
+                            text: 'Add Notes',
+                            options: FFButtonOptions(
+                              width: 130,
+                              height: 40,
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .subtitle2
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                  ),
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                                width: 1,
+                              ),
+                              borderRadius: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
@@ -265,9 +339,8 @@ class _TicketDetailWidgetState extends State<TicketDetailWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                       child: StreamBuilder<List<NotesRecord>>(
                         stream: queryNotesRecord(
-                          queryBuilder: (notesRecord) => notesRecord
-                              .where('ref', isEqualTo: widget.ticketDocRef)
-                              .orderBy('date', descending: true),
+                          queryBuilder: (notesRecord) =>
+                              notesRecord.orderBy('date', descending: true),
                         ),
                         builder: (context, snapshot) {
                           // Customize what your widget looks like when it's loading.
@@ -319,34 +392,6 @@ class _TicketDetailWidgetState extends State<TicketDetailWidget> {
                             },
                           );
                         },
-                      ),
-                    ),
-                    FFButtonWidget(
-                      onPressed: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => TicketChangesWidget(
-                              ticketDocRef: ticketDetailTicketsRecord.reference,
-                            ),
-                          ),
-                        );
-                      },
-                      text: 'Amend',
-                      options: FFButtonOptions(
-                        width: 130,
-                        height: 40,
-                        color: FlutterFlowTheme.of(context).primaryColor,
-                        textStyle:
-                            FlutterFlowTheme.of(context).subtitle2.override(
-                                  fontFamily: 'Poppins',
-                                  color: Colors.white,
-                                ),
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                          width: 1,
-                        ),
-                        borderRadius: 12,
                       ),
                     ),
                   ],

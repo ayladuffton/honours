@@ -1,5 +1,4 @@
 import '../backend/backend.dart';
-import '../confirmation/confirmation_widget.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -8,46 +7,40 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TicketChangesWidget extends StatefulWidget {
   const TicketChangesWidget({
     Key key,
     this.ticketDocRef,
+    this.ticketNoteRef,
   }) : super(key: key);
 
   final DocumentReference ticketDocRef;
+  final DocumentReference ticketNoteRef;
 
   @override
   _TicketChangesWidgetState createState() => _TicketChangesWidgetState();
 }
 
 class _TicketChangesWidgetState extends State<TicketChangesWidget> {
-  String dropDownValue1;
-  TextEditingController textController1;
-  TextEditingController textController2;
-  TextEditingController textController3;
-  TextEditingController textController4;
-  TextEditingController textController5;
-  TextEditingController textController6;
-  String dropDownValue2;
-  String dropDownValue3;
-  String dropDownValue4;
-  TextEditingController textController7;
-  String dropDownValue5;
-  String dropDownValue6;
-  TextEditingController textController8;
-  TextEditingController textController9;
-  TextEditingController textController10;
+  DateTime datePicked;
+  TextEditingController dateTextFieldController;
+  TextEditingController sourceTextFieldController;
+  TextEditingController userTextFieldController;
+  TextEditingController titleTextFieldController;
+  String statusDropDownValue;
+  TextEditingController actionTextFieldController;
+  String priorityDropDownValue;
+  String categoryDropDownValue;
+  String areaDropDownValue;
+  TextEditingController deviceTextFieldController;
+  String companyDropDownValue;
+  String assignedDropDownValue;
+  TextEditingController archiveTextFieldController;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  @override
-  void initState() {
-    super.initState();
-    textController10 = TextEditingController();
-    textController9 = TextEditingController();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,13 +113,13 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       10, 10, 10, 10),
                                   child: TextFormField(
-                                    controller: textController1 ??=
+                                    controller: dateTextFieldController ??=
                                         TextEditingController(
                                       text:
                                           'Date:  ${dateTimeFormat('d/M/y', ticketChangesTicketsRecord.date)}',
                                     ),
                                     onChanged: (_) => EasyDebounce.debounce(
-                                      'textController1',
+                                      'dateTextFieldController',
                                       Duration(milliseconds: 2000),
                                       () => setState(() {}),
                                     ),
@@ -165,52 +158,35 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                   ),
                                 ),
                               ),
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 10, 10, 10),
-                                  child: TextFormField(
-                                    controller: textController2 ??=
-                                        TextEditingController(
-                                      text:
-                                          'Due:  ${dateTimeFormat('d/M/y', ticketChangesTicketsRecord.due)}',
-                                    ),
-                                    onChanged: (_) => EasyDebounce.debounce(
-                                      'textController2',
-                                      Duration(milliseconds: 2000),
-                                      () => setState(() {}),
-                                    ),
-                                    autofocus: true,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      hintText: 'Due',
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
-                                      ),
-                                      contentPadding:
-                                          EdgeInsetsDirectional.fromSTEB(
-                                              12, 4, 12, 4),
-                                    ),
-                                    style:
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0, 10, 10, 10),
+                                child: FFButtonWidget(
+                                  onPressed: () async {
+                                    await DatePicker.showDateTimePicker(
+                                      context,
+                                      showTitleActions: true,
+                                      onConfirm: (date) {
+                                        setState(() => datePicked = date);
+                                      },
+                                      currentTime: getCurrentTimestamp,
+                                      minTime: getCurrentTimestamp,
+                                    );
+                                  },
+                                  text:
+                                      'Due:  ${dateTimeFormat('d/M/y', ticketChangesTicketsRecord.due)}',
+                                  options: FFButtonOptions(
+                                    width: 130,
+                                    height: 40,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryBackground,
+                                    textStyle:
                                         FlutterFlowTheme.of(context).bodyText1,
-                                    keyboardType: TextInputType.datetime,
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                      width: 1,
+                                    ),
+                                    borderRadius: 12,
                                   ),
                                 ),
                               ),
@@ -224,13 +200,13 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       10, 0, 10, 10),
                                   child: TextFormField(
-                                    controller: textController3 ??=
+                                    controller: userTextFieldController ??=
                                         TextEditingController(
                                       text:
                                           'User:  ${ticketChangesTicketsRecord.user}',
                                     ),
                                     onChanged: (_) => EasyDebounce.debounce(
-                                      'textController3',
+                                      'userTextFieldController',
                                       Duration(milliseconds: 2000),
                                       () => setState(() {}),
                                     ),
@@ -272,13 +248,13 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 10, 10),
                                   child: TextFormField(
-                                    controller: textController4 ??=
+                                    controller: sourceTextFieldController ??=
                                         TextEditingController(
                                       text:
                                           'Source:  ${ticketChangesTicketsRecord.source}',
                                     ),
                                     onChanged: (_) => EasyDebounce.debounce(
-                                      'textController4',
+                                      'sourceTextFieldController',
                                       Duration(milliseconds: 2000),
                                       () => setState(() {}),
                                     ),
@@ -326,13 +302,13 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       10, 0, 10, 10),
                                   child: TextFormField(
-                                    controller: textController5 ??=
+                                    controller: titleTextFieldController ??=
                                         TextEditingController(
                                       text:
                                           'Title:  ${ticketChangesTicketsRecord.title}',
                                     ),
                                     onChanged: (_) => EasyDebounce.debounce(
-                                      'textController5',
+                                      'titleTextFieldController',
                                       Duration(milliseconds: 2000),
                                       () => setState(() {}),
                                     ),
@@ -378,7 +354,7 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     10, 0, 10, 10),
                                 child: FlutterFlowDropDown(
-                                  initialOption: dropDownValue1 ??=
+                                  initialOption: statusDropDownValue ??=
                                       ticketChangesTicketsRecord.status,
                                   options: [
                                     'Archived',
@@ -388,7 +364,7 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                     'To Do'
                                   ],
                                   onChanged: (val) =>
-                                      setState(() => dropDownValue1 = val),
+                                      setState(() => statusDropDownValue = val),
                                   width: 180,
                                   height: 50,
                                   textStyle: FlutterFlowTheme.of(context)
@@ -418,13 +394,13 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       10, 0, 10, 10),
                                   child: TextFormField(
-                                    controller: textController6 ??=
+                                    controller: actionTextFieldController ??=
                                         TextEditingController(
                                       text:
                                           'Action:  ${ticketChangesTicketsRecord.action}',
                                     ),
                                     onChanged: (_) => EasyDebounce.debounce(
-                                      'textController6',
+                                      'actionTextFieldController',
                                       Duration(milliseconds: 2000),
                                       () => setState(() {}),
                                     ),
@@ -470,7 +446,7 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     10, 0, 10, 10),
                                 child: FlutterFlowDropDown(
-                                  initialOption: dropDownValue2 ??=
+                                  initialOption: priorityDropDownValue ??=
                                       ticketChangesTicketsRecord.priority,
                                   options: [
                                     'Low',
@@ -482,8 +458,8 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                     'Today',
                                     'Urgent'
                                   ],
-                                  onChanged: (val) =>
-                                      setState(() => dropDownValue2 = val),
+                                  onChanged: (val) => setState(
+                                      () => priorityDropDownValue = val),
                                   width: 180,
                                   height: 50,
                                   textStyle: FlutterFlowTheme.of(context)
@@ -512,7 +488,7 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     10, 0, 10, 10),
                                 child: FlutterFlowDropDown(
-                                  initialOption: dropDownValue3 ??=
+                                  initialOption: categoryDropDownValue ??=
                                       ticketChangesTicketsRecord.category,
                                   options: [
                                     'Access Request',
@@ -546,8 +522,8 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                     'Teams',
                                     'Websites'
                                   ],
-                                  onChanged: (val) =>
-                                      setState(() => dropDownValue3 = val),
+                                  onChanged: (val) => setState(
+                                      () => categoryDropDownValue = val),
                                   width: 180,
                                   height: 50,
                                   textStyle: FlutterFlowTheme.of(context)
@@ -577,13 +553,13 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       10, 0, 10, 10),
                                   child: TextFormField(
-                                    controller: textController7 ??=
+                                    controller: deviceTextFieldController ??=
                                         TextEditingController(
                                       text:
                                           'Device:  ${ticketChangesTicketsRecord.device}',
                                     ),
                                     onChanged: (_) => EasyDebounce.debounce(
-                                      'textController7',
+                                      'deviceTextFieldController',
                                       Duration(milliseconds: 2000),
                                       () => setState(() {}),
                                     ),
@@ -624,7 +600,7 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0, 0, 10, 10),
                                 child: FlutterFlowDropDown(
-                                  initialOption: dropDownValue4 ??=
+                                  initialOption: areaDropDownValue ??=
                                       ticketChangesTicketsRecord.area,
                                   options: [
                                     'Aberdeen',
@@ -639,7 +615,7 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                     'Scottish Parliment'
                                   ],
                                   onChanged: (val) =>
-                                      setState(() => dropDownValue4 = val),
+                                      setState(() => areaDropDownValue = val),
                                   width: 180,
                                   height: 50,
                                   textStyle: FlutterFlowTheme.of(context)
@@ -668,7 +644,7 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     10, 0, 0, 10),
                                 child: FlutterFlowDropDown(
-                                  initialOption: dropDownValue5 ??=
+                                  initialOption: companyDropDownValue ??=
                                       ticketChangesTicketsRecord.company,
                                   options: [
                                     'Energy',
@@ -678,8 +654,8 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                     'Radio Design',
                                     'Renewables'
                                   ],
-                                  onChanged: (val) =>
-                                      setState(() => dropDownValue5 = val),
+                                  onChanged: (val) => setState(
+                                      () => companyDropDownValue = val),
                                   width: 180,
                                   height: 50,
                                   textStyle: FlutterFlowTheme.of(context)
@@ -708,11 +684,11 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     10, 0, 10, 10),
                                 child: FlutterFlowDropDown(
-                                  initialOption: dropDownValue6 ??=
+                                  initialOption: assignedDropDownValue ??=
                                       ticketChangesTicketsRecord.assigned,
                                   options: ['Ayla', 'Shiny'],
-                                  onChanged: (val) =>
-                                      setState(() => dropDownValue6 = val),
+                                  onChanged: (val) => setState(
+                                      () => assignedDropDownValue = val),
                                   width: 180,
                                   height: 50,
                                   textStyle: FlutterFlowTheme.of(context)
@@ -737,13 +713,13 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 10, 10),
                                   child: TextFormField(
-                                    controller: textController8 ??=
+                                    controller: archiveTextFieldController ??=
                                         TextEditingController(
                                       text:
                                           'Archive:  ${ticketChangesTicketsRecord.archive.toString()}',
                                     ),
                                     onChanged: (_) => EasyDebounce.debounce(
-                                      'textController8',
+                                      'archiveTextFieldController',
                                       Duration(milliseconds: 2000),
                                       () => setState(() {}),
                                     ),
@@ -783,106 +759,6 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                               ),
                             ],
                           ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 10, 0),
-                                  child: TextFormField(
-                                    controller: textController9,
-                                    onChanged: (_) => EasyDebounce.debounce(
-                                      'textController9',
-                                      Duration(milliseconds: 2000),
-                                      () => setState(() {}),
-                                    ),
-                                    autofocus: true,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      hintText: 'Note Date',
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
-                                      ),
-                                      contentPadding:
-                                          EdgeInsetsDirectional.fromSTEB(
-                                              12, 4, 12, 4),
-                                    ),
-                                    style:
-                                        FlutterFlowTheme.of(context).bodyText1,
-                                    keyboardType: TextInputType.datetime,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 10, 10),
-                                  child: TextFormField(
-                                    controller: textController10,
-                                    onChanged: (_) => EasyDebounce.debounce(
-                                      'textController10',
-                                      Duration(milliseconds: 2000),
-                                      () => setState(() {}),
-                                    ),
-                                    autofocus: true,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      hintText: 'Note Text',
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
-                                      ),
-                                      contentPadding:
-                                          EdgeInsetsDirectional.fromSTEB(
-                                              12, 4, 12, 4),
-                                    ),
-                                    style:
-                                        FlutterFlowTheme.of(context).bodyText1,
-                                    keyboardType: TextInputType.multiline,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
                           Align(
                             alignment: AlignmentDirectional(0, 0),
                             child: Padding(
@@ -890,13 +766,27 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                   EdgeInsetsDirectional.fromSTEB(0, 10, 0, 20),
                               child: FFButtonWidget(
                                 onPressed: () async {
-                                  await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          ConfirmationWidget(),
-                                    ),
+                                  final ticketsUpdateData =
+                                      createTicketsRecordData(
+                                    action:
+                                        actionTextFieldController?.text ?? '',
+                                    due: datePicked,
+                                    status: statusDropDownValue,
+                                    title: titleTextFieldController?.text ?? '',
+                                    user: userTextFieldController?.text ?? '',
+                                    priority: priorityDropDownValue,
+                                    category: categoryDropDownValue,
+                                    device:
+                                        deviceTextFieldController?.text ?? '',
+                                    area: areaDropDownValue,
+                                    company: companyDropDownValue,
+                                    assigned: assignedDropDownValue,
+                                    archive: int.parse(
+                                        archiveTextFieldController?.text ?? ''),
                                   );
+                                  await widget.ticketDocRef
+                                      .update(ticketsUpdateData);
+                                  Navigator.pop(context);
                                 },
                                 text: 'Save',
                                 options: FFButtonOptions(

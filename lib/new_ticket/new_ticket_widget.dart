@@ -102,7 +102,7 @@ class _NewTicketWidgetState extends State<NewTicketWidget> {
                         children: [
                           Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                                EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
                             child: FFButtonWidget(
                               onPressed: () async {
                                 await DatePicker.showDateTimePicker(
@@ -133,7 +133,7 @@ class _NewTicketWidgetState extends State<NewTicketWidget> {
                           ),
                           Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                                EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
                             child: FFButtonWidget(
                               onPressed: () async {
                                 await DatePicker.showDatePicker(
