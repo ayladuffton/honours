@@ -32,8 +32,8 @@ class _TicketUpdateWidgetState extends State<TicketUpdateWidget> {
   TextEditingController actionTextFieldController;
   String priorityDropDownValue;
   String categoryDropDownValue;
-  String areaDropDownValue;
   TextEditingController deviceTextFieldController;
+  String areaDropDownValue;
   String companyDropDownValue;
   String assignedDropDownValue;
   TextEditingController archiveTextFieldController;
@@ -100,105 +100,147 @@ class _TicketUpdateWidgetState extends State<TicketUpdateWidget> {
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: Padding(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 20, 10, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          10, 0, 0, 0),
+                                      child: Text(
+                                        'Date:',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1,
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 200,
+                                      decoration: BoxDecoration(),
+                                      child: TextFormField(
+                                        controller: dateTextFieldController ??=
+                                            TextEditingController(
+                                          text: dateTimeFormat('d/M/y',
+                                              ticketUpdateTicketsRecord.date),
+                                        ),
+                                        onChanged: (_) => EasyDebounce.debounce(
+                                          'dateTextFieldController',
+                                          Duration(milliseconds: 2000),
+                                          () => setState(() {}),
+                                        ),
+                                        autofocus: true,
+                                        readOnly: true,
+                                        obscureText: false,
+                                        decoration: InputDecoration(
+                                          hintText: 'Date',
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1,
+                                            ),
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              topLeft: Radius.circular(4.0),
+                                              topRight: Radius.circular(4.0),
+                                            ),
+                                          ),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1,
+                                            ),
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              topLeft: Radius.circular(4.0),
+                                              topRight: Radius.circular(4.0),
+                                            ),
+                                          ),
+                                          contentPadding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  12, 0, 12, 20),
+                                        ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1,
+                                        keyboardType: TextInputType.datetime,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 10, 10, 10),
-                                  child: TextFormField(
-                                    controller: dateTextFieldController ??=
-                                        TextEditingController(
-                                      text:
-                                          'Date:  ${dateTimeFormat('d/M/y', ticketUpdateTicketsRecord.date)}',
-                                    ),
-                                    onChanged: (_) => EasyDebounce.debounce(
-                                      'dateTextFieldController',
-                                      Duration(milliseconds: 2000),
-                                      () => setState(() {}),
-                                    ),
-                                    autofocus: true,
-                                    readOnly: true,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      hintText: 'Date',
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
+                                      0, 0, 10, 0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      FFButtonWidget(
+                                        onPressed: () async {
+                                          await DatePicker.showDateTimePicker(
+                                            context,
+                                            showTitleActions: true,
+                                            onConfirm: (date) {
+                                              setState(() => datePicked = date);
+                                            },
+                                            currentTime: getCurrentTimestamp,
+                                            minTime: getCurrentTimestamp,
+                                          );
+                                        },
+                                        text:
+                                            'Due:  ${dateTimeFormat('d/M/y', ticketUpdateTicketsRecord.due)}',
+                                        options: FFButtonOptions(
+                                          width: 130,
+                                          height: 40,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryBackground,
+                                          textStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyText1,
+                                          borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 1,
+                                          ),
+                                          borderRadius: 12,
                                         ),
                                       ),
-                                      contentPadding:
-                                          EdgeInsetsDirectional.fromSTEB(
-                                              12, 4, 12, 4),
-                                    ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      10, 0, 0, 0),
+                                  child: Text(
+                                    'User:',
                                     style:
                                         FlutterFlowTheme.of(context).bodyText1,
-                                    keyboardType: TextInputType.datetime,
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0, 10, 10, 10),
-                                child: FFButtonWidget(
-                                  onPressed: () async {
-                                    await DatePicker.showDateTimePicker(
-                                      context,
-                                      showTitleActions: true,
-                                      onConfirm: (date) {
-                                        setState(() => datePicked = date);
-                                      },
-                                      currentTime: getCurrentTimestamp,
-                                      minTime: getCurrentTimestamp,
-                                    );
-                                  },
-                                  text:
-                                      'Due:  ${dateTimeFormat('d/M/y', ticketUpdateTicketsRecord.due)}',
-                                  options: FFButtonOptions(
-                                    width: 130,
-                                    height: 40,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                    textStyle:
-                                        FlutterFlowTheme.of(context).bodyText1,
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1,
-                                    ),
-                                    borderRadius: 12,
-                                  ),
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 10, 10),
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
                                   child: TextFormField(
                                     controller: userTextFieldController ??=
                                         TextEditingController(
-                                      text:
-                                          'User:  ${ticketUpdateTicketsRecord.user}',
+                                      text: ticketUpdateTicketsRecord.user,
                                     ),
                                     onChanged: (_) => EasyDebounce.debounce(
                                       'userTextFieldController',
@@ -231,27 +273,45 @@ class _TicketUpdateWidgetState extends State<TicketUpdateWidget> {
                                       ),
                                       contentPadding:
                                           EdgeInsetsDirectional.fromSTEB(
-                                              12, 4, 12, 4),
+                                              12, 0, 12, 20),
                                     ),
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyText1,
+                                    keyboardType: TextInputType.datetime,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      10, 0, 0, 0),
+                                  child: Text(
+                                    'Source:',
                                     style:
                                         FlutterFlowTheme.of(context).bodyText1,
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 10, 10),
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
                                   child: TextFormField(
                                     controller: sourceTextFieldController ??=
                                         TextEditingController(
-                                      text:
-                                          'Source:  ${ticketUpdateTicketsRecord.source}',
+                                      text: ticketUpdateTicketsRecord.source,
                                     ),
                                     onChanged: (_) => EasyDebounce.debounce(
                                       'sourceTextFieldController',
@@ -262,7 +322,6 @@ class _TicketUpdateWidgetState extends State<TicketUpdateWidget> {
                                     readOnly: true,
                                     obscureText: false,
                                     decoration: InputDecoration(
-                                      hintText: '[Some hint text...]',
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
@@ -285,27 +344,44 @@ class _TicketUpdateWidgetState extends State<TicketUpdateWidget> {
                                       ),
                                       contentPadding:
                                           EdgeInsetsDirectional.fromSTEB(
-                                              12, 4, 12, 4),
+                                              12, 0, 12, 20),
                                     ),
                                     style:
                                         FlutterFlowTheme.of(context).bodyText1,
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: Padding(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 10, 10),
+                                      10, 0, 0, 0),
+                                  child: Text(
+                                    'Title:',
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyText1,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
                                   child: TextFormField(
                                     controller: titleTextFieldController ??=
                                         TextEditingController(
-                                      text:
-                                          'Title:  ${ticketUpdateTicketsRecord.title}',
+                                      text: ticketUpdateTicketsRecord.title,
                                     ),
                                     onChanged: (_) => EasyDebounce.debounce(
                                       'titleTextFieldController',
@@ -338,22 +414,41 @@ class _TicketUpdateWidgetState extends State<TicketUpdateWidget> {
                                       ),
                                       contentPadding:
                                           EdgeInsetsDirectional.fromSTEB(
-                                              12, 4, 12, 4),
+                                              12, 0, 12, 20),
                                     ),
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyText1,
+                                    keyboardType: TextInputType.datetime,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      10, 0, 0, 0),
+                                  child: Text(
+                                    'Status:',
                                     style:
                                         FlutterFlowTheme.of(context).bodyText1,
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    10, 0, 10, 10),
-                                child: FlutterFlowDropDown(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                FlutterFlowDropDown(
                                   initialOption: statusDropDownValue ??=
                                       ticketUpdateTicketsRecord.status,
                                   options: [
@@ -380,24 +475,41 @@ class _TicketUpdateWidgetState extends State<TicketUpdateWidget> {
                                   borderWidth: 0,
                                   borderRadius: 0,
                                   margin: EdgeInsetsDirectional.fromSTEB(
-                                      12, 4, 12, 4),
+                                      12, 0, 12, 20),
                                   hidesUnderline: true,
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: Padding(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 10, 10),
+                                      10, 0, 0, 0),
+                                  child: Text(
+                                    'Action:',
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyText1,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
                                   child: TextFormField(
                                     controller: actionTextFieldController ??=
                                         TextEditingController(
-                                      text:
-                                          'Action:  ${ticketUpdateTicketsRecord.action}',
+                                      text: ticketUpdateTicketsRecord.action,
                                     ),
                                     onChanged: (_) => EasyDebounce.debounce(
                                       'actionTextFieldController',
@@ -430,22 +542,41 @@ class _TicketUpdateWidgetState extends State<TicketUpdateWidget> {
                                       ),
                                       contentPadding:
                                           EdgeInsetsDirectional.fromSTEB(
-                                              12, 4, 12, 4),
+                                              12, 0, 12, 20),
                                     ),
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyText1,
+                                    keyboardType: TextInputType.datetime,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      10, 0, 0, 0),
+                                  child: Text(
+                                    'Priority:',
                                     style:
                                         FlutterFlowTheme.of(context).bodyText1,
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    10, 0, 10, 10),
-                                child: FlutterFlowDropDown(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                FlutterFlowDropDown(
                                   initialOption: priorityDropDownValue ??=
                                       ticketUpdateTicketsRecord.priority,
                                   options: [
@@ -475,19 +606,37 @@ class _TicketUpdateWidgetState extends State<TicketUpdateWidget> {
                                   borderWidth: 0,
                                   borderRadius: 0,
                                   margin: EdgeInsetsDirectional.fromSTEB(
-                                      12, 4, 12, 4),
+                                      12, 0, 12, 20),
                                   hidesUnderline: true,
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    10, 0, 10, 10),
-                                child: FlutterFlowDropDown(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      10, 0, 0, 0),
+                                  child: Text(
+                                    'Category:',
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyText1,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                FlutterFlowDropDown(
                                   initialOption: categoryDropDownValue ??=
                                       ticketUpdateTicketsRecord.category,
                                   options: [
@@ -539,24 +688,41 @@ class _TicketUpdateWidgetState extends State<TicketUpdateWidget> {
                                   borderWidth: 0,
                                   borderRadius: 0,
                                   margin: EdgeInsetsDirectional.fromSTEB(
-                                      12, 4, 12, 4),
+                                      12, 0, 12, 20),
                                   hidesUnderline: true,
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: Padding(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 10, 10),
+                                      10, 0, 0, 0),
+                                  child: Text(
+                                    'Device:',
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyText1,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
                                   child: TextFormField(
                                     controller: deviceTextFieldController ??=
                                         TextEditingController(
-                                      text:
-                                          'Device:  ${ticketUpdateTicketsRecord.device}',
+                                      text: ticketUpdateTicketsRecord.device,
                                     ),
                                     onChanged: (_) => EasyDebounce.debounce(
                                       'deviceTextFieldController',
@@ -589,17 +755,41 @@ class _TicketUpdateWidgetState extends State<TicketUpdateWidget> {
                                       ),
                                       contentPadding:
                                           EdgeInsetsDirectional.fromSTEB(
-                                              12, 4, 12, 4),
+                                              12, 0, 12, 20),
                                     ),
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyText1,
+                                    keyboardType: TextInputType.datetime,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      10, 0, 0, 0),
+                                  child: Text(
+                                    'Area:',
                                     style:
                                         FlutterFlowTheme.of(context).bodyText1,
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0, 0, 10, 10),
-                                child: FlutterFlowDropDown(
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                FlutterFlowDropDown(
                                   initialOption: areaDropDownValue ??=
                                       ticketUpdateTicketsRecord.area,
                                   options: [
@@ -631,19 +821,37 @@ class _TicketUpdateWidgetState extends State<TicketUpdateWidget> {
                                   borderWidth: 0,
                                   borderRadius: 0,
                                   margin: EdgeInsetsDirectional.fromSTEB(
-                                      12, 4, 12, 4),
+                                      12, 0, 12, 20),
                                   hidesUnderline: true,
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    10, 0, 0, 10),
-                                child: FlutterFlowDropDown(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      10, 0, 0, 0),
+                                  child: Text(
+                                    'Company:',
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyText1,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                FlutterFlowDropDown(
                                   initialOption: companyDropDownValue ??=
                                       ticketUpdateTicketsRecord.company,
                                   options: [
@@ -671,19 +879,37 @@ class _TicketUpdateWidgetState extends State<TicketUpdateWidget> {
                                   borderWidth: 0,
                                   borderRadius: 0,
                                   margin: EdgeInsetsDirectional.fromSTEB(
-                                      12, 4, 12, 4),
+                                      12, 0, 12, 20),
                                   hidesUnderline: true,
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    10, 0, 10, 10),
-                                child: FlutterFlowDropDown(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      10, 0, 0, 0),
+                                  child: Text(
+                                    'Assigned:',
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyText1,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                FlutterFlowDropDown(
                                   initialOption: assignedDropDownValue ??=
                                       ticketUpdateTicketsRecord.assigned,
                                   options: ['Ayla', 'Shiny'],
@@ -704,19 +930,42 @@ class _TicketUpdateWidgetState extends State<TicketUpdateWidget> {
                                   borderWidth: 0,
                                   borderRadius: 0,
                                   margin: EdgeInsetsDirectional.fromSTEB(
-                                      12, 4, 12, 4),
+                                      12, 0, 12, 20),
                                   hidesUnderline: true,
                                 ),
-                              ),
-                              Expanded(
-                                child: Padding(
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 10, 10),
+                                      10, 0, 0, 0),
+                                  child: Text(
+                                    'Archive:',
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyText1,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
                                   child: TextFormField(
                                     controller: archiveTextFieldController ??=
                                         TextEditingController(
-                                      text:
-                                          'Archive:  ${ticketUpdateTicketsRecord.archive.toString()}',
+                                      text: ticketUpdateTicketsRecord.archive
+                                          .toString(),
                                     ),
                                     onChanged: (_) => EasyDebounce.debounce(
                                       'archiveTextFieldController',
@@ -749,15 +998,15 @@ class _TicketUpdateWidgetState extends State<TicketUpdateWidget> {
                                       ),
                                       contentPadding:
                                           EdgeInsetsDirectional.fromSTEB(
-                                              12, 4, 12, 4),
+                                              12, 0, 12, 20),
                                     ),
                                     style:
                                         FlutterFlowTheme.of(context).bodyText1,
                                     keyboardType: TextInputType.number,
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                           Align(
                             alignment: AlignmentDirectional(0, 0),
@@ -776,13 +1025,13 @@ class _TicketUpdateWidgetState extends State<TicketUpdateWidget> {
                                     user: userTextFieldController?.text ?? '',
                                     priority: priorityDropDownValue,
                                     category: categoryDropDownValue,
-                                    device:
-                                        deviceTextFieldController?.text ?? '',
                                     area: areaDropDownValue,
                                     company: companyDropDownValue,
                                     assigned: assignedDropDownValue,
                                     archive: int.parse(
                                         archiveTextFieldController?.text ?? ''),
+                                    device:
+                                        deviceTextFieldController?.text ?? '',
                                   );
                                   await ticketUpdateTicketsRecord.reference
                                       .update(ticketsUpdateData);
