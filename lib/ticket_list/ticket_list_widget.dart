@@ -108,62 +108,69 @@ class _TicketListWidgetState extends State<TicketListWidget> {
                           itemBuilder: (context, listViewIndex) {
                             final listViewTicketsRecord =
                                 listViewTicketsRecordList[listViewIndex];
-                            return InkWell(
-                              onTap: () async {
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => TicketDetailWidget(
-                                      ticketDocRef:
-                                          listViewTicketsRecord.reference,
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                            return Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Text(
                                       'Ticket #',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1,
                                     ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 10, 0),
-                                      child: Text(
-                                        listViewTicketsRecord.ticketNumber
-                                            .toString(),
-                                        textAlign: TextAlign.start,
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyText1,
-                                      ),
-                                    ),
                                     Text(
-                                      'Title:  ',
+                                      listViewTicketsRecord.ticketNumber
+                                          .toString(),
+                                      textAlign: TextAlign.start,
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1,
                                     ),
-                                    Align(
-                                      alignment: AlignmentDirectional(0, 0),
-                                      child: Padding(
+                                  ],
+                                ),
+                                InkWell(
+                                  onTap: () async {
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            TicketDetailWidget(
+                                          ticketDocRef:
+                                              listViewTicketsRecord.reference,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 10, 0),
+                                            0, 0, 0, 10),
                                         child: Text(
-                                          listViewTicketsRecord.title,
-                                          textAlign: TextAlign.start,
+                                          'Title:  ',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1,
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                      Align(
+                                        alignment: AlignmentDirectional(0, 0),
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0, 0, 0, 10),
+                                          child: Text(
+                                            listViewTicketsRecord.title,
+                                            textAlign: TextAlign.start,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
+                              ],
                             );
                           },
                         );

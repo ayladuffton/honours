@@ -5,7 +5,6 @@ import '../flutter_flow/flutter_flow_util.dart';
 
 import 'schema/tickets_record.dart';
 import 'schema/notes_record.dart';
-import 'schema/ticket_notes_record.dart';
 import 'schema/serializers.dart';
 
 export 'dart:async' show StreamSubscription;
@@ -15,7 +14,6 @@ export 'schema/serializers.dart';
 
 export 'schema/tickets_record.dart';
 export 'schema/notes_record.dart';
-export 'schema/ticket_notes_record.dart';
 
 /// Functions to query TicketsRecords (as a Stream and as a Future).
 Stream<List<TicketsRecord>> queryTicketsRecord({
@@ -95,51 +93,6 @@ Future<FFFirestorePage<NotesRecord>> queryNotesRecordPage({
     queryCollectionPage(
       NotesRecord.collection,
       NotesRecord.serializer,
-      queryBuilder: queryBuilder,
-      nextPageMarker: nextPageMarker,
-      pageSize: pageSize,
-      isStream: isStream,
-    );
-
-/// Functions to query TicketNotesRecords (as a Stream and as a Future).
-Stream<List<TicketNotesRecord>> queryTicketNotesRecord({
-  DocumentReference parent,
-  Query Function(Query) queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollection(
-      TicketNotesRecord.collection(parent),
-      TicketNotesRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<List<TicketNotesRecord>> queryTicketNotesRecordOnce({
-  DocumentReference parent,
-  Query Function(Query) queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      TicketNotesRecord.collection(parent),
-      TicketNotesRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<FFFirestorePage<TicketNotesRecord>> queryTicketNotesRecordPage({
-  DocumentReference parent,
-  Query Function(Query) queryBuilder,
-  DocumentSnapshot nextPageMarker,
-  int pageSize,
-  bool isStream,
-}) =>
-    queryCollectionPage(
-      TicketNotesRecord.collection(parent),
-      TicketNotesRecord.serializer,
       queryBuilder: queryBuilder,
       nextPageMarker: nextPageMarker,
       pageSize: pageSize,

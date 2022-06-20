@@ -10,25 +10,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class TicketChangesWidget extends StatefulWidget {
-  const TicketChangesWidget({
+class TicketUpdateWidget extends StatefulWidget {
+  const TicketUpdateWidget({
     Key key,
     this.ticketDocRef,
-    this.ticketNoteRef,
   }) : super(key: key);
 
   final DocumentReference ticketDocRef;
-  final DocumentReference ticketNoteRef;
 
   @override
-  _TicketChangesWidgetState createState() => _TicketChangesWidgetState();
+  _TicketUpdateWidgetState createState() => _TicketUpdateWidgetState();
 }
 
-class _TicketChangesWidgetState extends State<TicketChangesWidget> {
+class _TicketUpdateWidgetState extends State<TicketUpdateWidget> {
   DateTime datePicked;
   TextEditingController dateTextFieldController;
-  TextEditingController sourceTextFieldController;
   TextEditingController userTextFieldController;
+  TextEditingController sourceTextFieldController;
   TextEditingController titleTextFieldController;
   String statusDropDownValue;
   TextEditingController actionTextFieldController;
@@ -39,7 +37,6 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
   String companyDropDownValue;
   String assignedDropDownValue;
   TextEditingController archiveTextFieldController;
-  final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -59,7 +56,7 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
             ),
           );
         }
-        final ticketChangesTicketsRecord = snapshot.data;
+        final ticketUpdateTicketsRecord = snapshot.data;
         return Scaffold(
           key: scaffoldKey,
           appBar: AppBar(
@@ -80,7 +77,7 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
               },
             ),
             title: Text(
-              'Amend Ticket #${ticketChangesTicketsRecord.ticketNumber.toString()}',
+              'Amend Ticket #${ticketUpdateTicketsRecord.ticketNumber.toString()}',
               style: FlutterFlowTheme.of(context).title2.override(
                     fontFamily: 'Poppins',
                     color: Colors.white,
@@ -99,9 +96,7 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Form(
-                      key: formKey,
-                      autovalidateMode: AutovalidateMode.disabled,
+                    SingleChildScrollView(
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -116,7 +111,7 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                     controller: dateTextFieldController ??=
                                         TextEditingController(
                                       text:
-                                          'Date:  ${dateTimeFormat('d/M/y', ticketChangesTicketsRecord.date)}',
+                                          'Date:  ${dateTimeFormat('d/M/y', ticketUpdateTicketsRecord.date)}',
                                     ),
                                     onChanged: (_) => EasyDebounce.debounce(
                                       'dateTextFieldController',
@@ -174,7 +169,7 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                     );
                                   },
                                   text:
-                                      'Due:  ${dateTimeFormat('d/M/y', ticketChangesTicketsRecord.due)}',
+                                      'Due:  ${dateTimeFormat('d/M/y', ticketUpdateTicketsRecord.due)}',
                                   options: FFButtonOptions(
                                     width: 130,
                                     height: 40,
@@ -203,7 +198,7 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                     controller: userTextFieldController ??=
                                         TextEditingController(
                                       text:
-                                          'User:  ${ticketChangesTicketsRecord.user}',
+                                          'User:  ${ticketUpdateTicketsRecord.user}',
                                     ),
                                     onChanged: (_) => EasyDebounce.debounce(
                                       'userTextFieldController',
@@ -243,15 +238,20 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                   ),
                                 ),
                               ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
                               Expanded(
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 10, 10),
+                                      10, 0, 10, 10),
                                   child: TextFormField(
                                     controller: sourceTextFieldController ??=
                                         TextEditingController(
                                       text:
-                                          'Source:  ${ticketChangesTicketsRecord.source}',
+                                          'Source:  ${ticketUpdateTicketsRecord.source}',
                                     ),
                                     onChanged: (_) => EasyDebounce.debounce(
                                       'sourceTextFieldController',
@@ -305,7 +305,7 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                     controller: titleTextFieldController ??=
                                         TextEditingController(
                                       text:
-                                          'Title:  ${ticketChangesTicketsRecord.title}',
+                                          'Title:  ${ticketUpdateTicketsRecord.title}',
                                     ),
                                     onChanged: (_) => EasyDebounce.debounce(
                                       'titleTextFieldController',
@@ -355,7 +355,7 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                     10, 0, 10, 10),
                                 child: FlutterFlowDropDown(
                                   initialOption: statusDropDownValue ??=
-                                      ticketChangesTicketsRecord.status,
+                                      ticketUpdateTicketsRecord.status,
                                   options: [
                                     'Archived',
                                     'Awaiting',
@@ -397,7 +397,7 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                     controller: actionTextFieldController ??=
                                         TextEditingController(
                                       text:
-                                          'Action:  ${ticketChangesTicketsRecord.action}',
+                                          'Action:  ${ticketUpdateTicketsRecord.action}',
                                     ),
                                     onChanged: (_) => EasyDebounce.debounce(
                                       'actionTextFieldController',
@@ -447,7 +447,7 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                     10, 0, 10, 10),
                                 child: FlutterFlowDropDown(
                                   initialOption: priorityDropDownValue ??=
-                                      ticketChangesTicketsRecord.priority,
+                                      ticketUpdateTicketsRecord.priority,
                                   options: [
                                     'Low',
                                     'Normal',
@@ -489,7 +489,7 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                     10, 0, 10, 10),
                                 child: FlutterFlowDropDown(
                                   initialOption: categoryDropDownValue ??=
-                                      ticketChangesTicketsRecord.category,
+                                      ticketUpdateTicketsRecord.category,
                                   options: [
                                     'Access Request',
                                     'Account',
@@ -556,7 +556,7 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                     controller: deviceTextFieldController ??=
                                         TextEditingController(
                                       text:
-                                          'Device:  ${ticketChangesTicketsRecord.device}',
+                                          'Device:  ${ticketUpdateTicketsRecord.device}',
                                     ),
                                     onChanged: (_) => EasyDebounce.debounce(
                                       'deviceTextFieldController',
@@ -601,7 +601,7 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                     0, 0, 10, 10),
                                 child: FlutterFlowDropDown(
                                   initialOption: areaDropDownValue ??=
-                                      ticketChangesTicketsRecord.area,
+                                      ticketUpdateTicketsRecord.area,
                                   options: [
                                     'Aberdeen',
                                     'Brasil',
@@ -645,7 +645,7 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                     10, 0, 0, 10),
                                 child: FlutterFlowDropDown(
                                   initialOption: companyDropDownValue ??=
-                                      ticketChangesTicketsRecord.company,
+                                      ticketUpdateTicketsRecord.company,
                                   options: [
                                     'Energy',
                                     'Engineering',
@@ -685,7 +685,7 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                     10, 0, 10, 10),
                                 child: FlutterFlowDropDown(
                                   initialOption: assignedDropDownValue ??=
-                                      ticketChangesTicketsRecord.assigned,
+                                      ticketUpdateTicketsRecord.assigned,
                                   options: ['Ayla', 'Shiny'],
                                   onChanged: (val) => setState(
                                       () => assignedDropDownValue = val),
@@ -716,7 +716,7 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                     controller: archiveTextFieldController ??=
                                         TextEditingController(
                                       text:
-                                          'Archive:  ${ticketChangesTicketsRecord.archive.toString()}',
+                                          'Archive:  ${ticketUpdateTicketsRecord.archive.toString()}',
                                     ),
                                     onChanged: (_) => EasyDebounce.debounce(
                                       'archiveTextFieldController',
@@ -784,7 +784,7 @@ class _TicketChangesWidgetState extends State<TicketChangesWidget> {
                                     archive: int.parse(
                                         archiveTextFieldController?.text ?? ''),
                                   );
-                                  await widget.ticketDocRef
+                                  await ticketUpdateTicketsRecord.reference
                                       .update(ticketsUpdateData);
                                   Navigator.pop(context);
                                 },

@@ -4,7 +4,7 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../ticket_changes/ticket_changes_widget.dart';
+import '../ticket_update/ticket_update_widget.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -14,11 +14,9 @@ class TicketDetailWidget extends StatefulWidget {
   const TicketDetailWidget({
     Key key,
     this.ticketDocRef,
-    this.ticketNoteRef,
   }) : super(key: key);
 
   final DocumentReference ticketDocRef;
-  final DocumentReference ticketNoteRef;
 
   @override
   _TicketDetailWidgetState createState() => _TicketDetailWidgetState();
@@ -155,6 +153,14 @@ class _TicketDetailWidgetState extends State<TicketDetailWidget> {
                               style: FlutterFlowTheme.of(context).bodyText1,
                             ),
                           ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
                           Padding(
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
@@ -263,14 +269,14 @@ class _TicketDetailWidgetState extends State<TicketDetailWidget> {
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => TicketChangesWidget(
+                                  builder: (context) => TicketUpdateWidget(
                                     ticketDocRef:
                                         ticketDetailTicketsRecord.reference,
                                   ),
                                 ),
                               );
                             },
-                            text: 'Amend Ticket',
+                            text: 'Edit Details',
                             options: FFButtonOptions(
                               width: 130,
                               height: 40,
@@ -301,7 +307,7 @@ class _TicketDetailWidgetState extends State<TicketDetailWidget> {
                                 ),
                               );
                             },
-                            text: 'Add Notes',
+                            text: 'Add Note',
                             options: FFButtonOptions(
                               width: 130,
                               height: 40,
