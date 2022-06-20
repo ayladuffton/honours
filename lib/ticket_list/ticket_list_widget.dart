@@ -48,7 +48,7 @@ class _TicketListWidgetState extends State<TicketListWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(10, 10, 0, 0),
+                  padding: EdgeInsetsDirectional.fromSTEB(10, 10, 0, 12),
                   child: FFButtonWidget(
                     onPressed: () async {
                       await Navigator.push(
@@ -130,7 +130,7 @@ class _TicketListWidgetState extends State<TicketListWidget> {
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 15),
+                                      0, 0, 0, 12),
                                   child: InkWell(
                                     onTap: () async {
                                       await Navigator.push(

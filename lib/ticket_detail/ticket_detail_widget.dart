@@ -83,7 +83,7 @@ class _TicketDetailWidgetState extends State<TicketDetailWidget> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 12),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -107,7 +107,7 @@ class _TicketDetailWidgetState extends State<TicketDetailWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 12),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -127,7 +127,7 @@ class _TicketDetailWidgetState extends State<TicketDetailWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 12),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -141,7 +141,7 @@ class _TicketDetailWidgetState extends State<TicketDetailWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 12),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -157,7 +157,7 @@ class _TicketDetailWidgetState extends State<TicketDetailWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 12),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -173,7 +173,7 @@ class _TicketDetailWidgetState extends State<TicketDetailWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 12),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -193,7 +193,7 @@ class _TicketDetailWidgetState extends State<TicketDetailWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 12),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -213,7 +213,7 @@ class _TicketDetailWidgetState extends State<TicketDetailWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 12),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -225,7 +225,7 @@ class _TicketDetailWidgetState extends State<TicketDetailWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 12),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -245,7 +245,7 @@ class _TicketDetailWidgetState extends State<TicketDetailWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 12),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -372,28 +372,32 @@ class _TicketDetailWidgetState extends State<TicketDetailWidget> {
                             itemBuilder: (context, listViewIndex) {
                               final listViewNotesRecord =
                                   listViewNotesRecordList[listViewIndex];
-                              return Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 10, 0),
-                                    child: Text(
-                                      dateTimeFormat(
-                                              'd/M/y', listViewNotesRecord.date)
-                                          .maybeHandleOverflow(maxChars: 10),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1,
+                              return Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 12),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 10, 0),
+                                      child: Text(
+                                        dateTimeFormat('d/M/y',
+                                                listViewNotesRecord.date)
+                                            .maybeHandleOverflow(maxChars: 10),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1,
+                                      ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: AutoSizeText(
-                                      listViewNotesRecord.noteText,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1,
+                                    Expanded(
+                                      child: AutoSizeText(
+                                        listViewNotesRecord.noteText,
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               );
                             },
                           );
