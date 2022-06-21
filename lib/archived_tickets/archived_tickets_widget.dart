@@ -1,23 +1,22 @@
-import '../archived_tickets/archived_tickets_widget.dart';
 import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../new_ticket/new_ticket_widget.dart';
 import '../ticket_detail/ticket_detail_widget.dart';
+import '../ticket_list/ticket_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:text_search/text_search.dart';
 
-class TicketListWidget extends StatefulWidget {
-  const TicketListWidget({Key key}) : super(key: key);
+class ArchivedTicketsWidget extends StatefulWidget {
+  const ArchivedTicketsWidget({Key key}) : super(key: key);
 
   @override
-  _TicketListWidgetState createState() => _TicketListWidgetState();
+  _ArchivedTicketsWidgetState createState() => _ArchivedTicketsWidgetState();
 }
 
-class _TicketListWidgetState extends State<TicketListWidget> {
+class _ArchivedTicketsWidgetState extends State<ArchivedTicketsWidget> {
   List<TicketsRecord> simpleSearchResults = [];
   TextEditingController searchTextFieldController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -45,14 +44,33 @@ class _TicketListWidgetState extends State<TicketListWidget> {
             ),
           );
         }
-        List<TicketsRecord> ticketListTicketsRecordList = snapshot.data;
+        List<TicketsRecord> archivedTicketsTicketsRecordList = snapshot.data;
         return Scaffold(
           key: scaffoldKey,
           appBar: AppBar(
             backgroundColor: FlutterFlowTheme.of(context).primaryColor,
             automaticallyImplyLeading: false,
+            leading: FlutterFlowIconButton(
+              borderColor: Colors.transparent,
+              borderRadius: 30,
+              borderWidth: 1,
+              buttonSize: 60,
+              icon: Icon(
+                Icons.arrow_back_rounded,
+                color: Colors.white,
+                size: 30,
+              ),
+              onPressed: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TicketListWidget(),
+                  ),
+                );
+              },
+            ),
             title: Text(
-              'Tickets',
+              'Archived Tickets',
               style: FlutterFlowTheme.of(context).title2.override(
                     fontFamily: 'Poppins',
                     color: Colors.white,
@@ -60,7 +78,7 @@ class _TicketListWidgetState extends State<TicketListWidget> {
                   ),
             ),
             actions: [],
-            centerTitle: false,
+            centerTitle: true,
             elevation: 2,
           ),
           backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -74,73 +92,6 @@ class _TicketListWidgetState extends State<TicketListWidget> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(10, 10, 0, 12),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => NewTicketWidget(),
-                                ),
-                              );
-                            },
-                            text: 'New Ticket',
-                            options: FFButtonOptions(
-                              width: 130,
-                              height: 40,
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .subtitle2
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    color: Colors.white,
-                                  ),
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1,
-                              ),
-                              borderRadius: 12,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(10, 10, 0, 12),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ArchivedTicketsWidget(),
-                                ),
-                              );
-                            },
-                            text: 'View Archive',
-                            options: FFButtonOptions(
-                              width: 130,
-                              height: 40,
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .subtitle2
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    color: Colors.white,
-                                  ),
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1,
-                              ),
-                              borderRadius: 12,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                       child: Container(
@@ -284,7 +235,7 @@ class _TicketListWidgetState extends State<TicketListWidget> {
                           child: StreamBuilder<List<TicketsRecord>>(
                             stream: queryTicketsRecord(
                               queryBuilder: (ticketsRecord) => ticketsRecord
-                                  .where('archive', isEqualTo: false)
+                                  .where('archive', isEqualTo: true)
                                   .orderBy('ticketNumber', descending: true),
                             ),
                             builder: (context, snapshot) {
@@ -395,16 +346,18 @@ class _TicketListWidgetState extends State<TicketListWidget> {
                               EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                           child: Builder(
                             builder: (context) {
-                              final ticketList =
+                              final archivedTicketList =
                                   simpleSearchResults?.toList() ?? [];
                               return ListView.builder(
                                 padding: EdgeInsets.zero,
                                 shrinkWrap: true,
                                 scrollDirection: Axis.vertical,
-                                itemCount: ticketList.length,
-                                itemBuilder: (context, ticketListIndex) {
-                                  final ticketListItem =
-                                      ticketList[ticketListIndex];
+                                itemCount: archivedTicketList.length,
+                                itemBuilder:
+                                    (context, archivedTicketListIndex) {
+                                  final archivedTicketListItem =
+                                      archivedTicketList[
+                                          archivedTicketListIndex];
                                   return Column(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
@@ -417,7 +370,7 @@ class _TicketListWidgetState extends State<TicketListWidget> {
                                                 .bodyText1,
                                           ),
                                           Text(
-                                            ticketListItem.ticketNumber
+                                            archivedTicketListItem.ticketNumber
                                                 .toString(),
                                             textAlign: TextAlign.start,
                                             style: FlutterFlowTheme.of(context)
@@ -436,7 +389,8 @@ class _TicketListWidgetState extends State<TicketListWidget> {
                                                 builder: (context) =>
                                                     TicketDetailWidget(
                                                   ticketDocRef:
-                                                      ticketListItem.reference,
+                                                      archivedTicketListItem
+                                                          .reference,
                                                 ),
                                               ),
                                             );
@@ -461,7 +415,8 @@ class _TicketListWidgetState extends State<TicketListWidget> {
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(0, 0, 0, 10),
                                                   child: Text(
-                                                    ticketListItem.title,
+                                                    archivedTicketListItem
+                                                        .title,
                                                     textAlign: TextAlign.start,
                                                     style: FlutterFlowTheme.of(
                                                             context)

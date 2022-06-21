@@ -1,3 +1,18 @@
 {
-  "indexes": []
+  "indexes": [
+    {
+      "collectionGroup": "Tickets",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "archive",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "ticketNumber",
+          "order": "DESCENDING"
+        }
+      ]
+    }
+  ]
 }

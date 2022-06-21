@@ -33,7 +33,7 @@ class _NewTicketWidgetState extends State<NewTicketWidget> {
   TextEditingController deviceTextFieldController;
   String companyDropDownValue;
   String assignedDropDownValue;
-  TextEditingController archiveTextFieldController;
+  bool archivedCheckboxListTileValue;
   TextEditingController infoTextTextFieldController;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -46,7 +46,6 @@ class _NewTicketWidgetState extends State<NewTicketWidget> {
     titleTextFieldController = TextEditingController();
     userTextFieldController = TextEditingController();
     deviceTextFieldController = TextEditingController();
-    archiveTextFieldController = TextEditingController();
     infoTextTextFieldController = TextEditingController();
   }
 
@@ -705,51 +704,28 @@ class _NewTicketWidgetState extends State<NewTicketWidget> {
                           Expanded(
                             child: Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 10, 10),
-                              child: TextFormField(
-                                controller: archiveTextFieldController,
-                                onChanged: (_) => EasyDebounce.debounce(
-                                  'archiveTextFieldController',
-                                  Duration(milliseconds: 2000),
-                                  () => setState(() {}),
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 20, 10),
+                              child: Theme(
+                                data: ThemeData(
+                                  unselectedWidgetColor: Color(0xFF95A1AC),
                                 ),
-                                autofocus: true,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  hintText: 'Archive',
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
-                                    ),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
-                                    ),
+                                child: CheckboxListTile(
+                                  value: archivedCheckboxListTileValue ??=
+                                      false,
+                                  onChanged: (newValue) => setState(() =>
+                                      archivedCheckboxListTileValue = newValue),
+                                  title: Text(
+                                    'Archived:',
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyText1,
                                   ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
-                                    ),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
-                                    ),
-                                  ),
-                                  contentPadding:
-                                      EdgeInsetsDirectional.fromSTEB(
-                                          12, 4, 12, 4),
+                                  tileColor: Color(0xFFF5F5F5),
+                                  activeColor:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                  dense: false,
+                                  controlAffinity:
+                                      ListTileControlAffinity.trailing,
                                 ),
-                                style: FlutterFlowTheme.of(context).bodyText1,
-                                keyboardType: TextInputType.number,
-                                validator: (val) {
-                                  if (val == null || val.isEmpty) {
-                                    return 'Field is required';
-                                  }
-
-                                  return null;
-                                },
                               ),
                             ),
                           ),
@@ -833,8 +809,7 @@ class _NewTicketWidgetState extends State<NewTicketWidget> {
                                 area: areaDropDownValue,
                                 company: companyDropDownValue,
                                 assigned: assignedDropDownValue,
-                                archive:
-                                    int.parse(archiveTextFieldController.text),
+                                archive: archivedCheckboxListTileValue,
                                 infoText: infoTextTextFieldController.text,
                               );
                               await TicketsRecord.collection

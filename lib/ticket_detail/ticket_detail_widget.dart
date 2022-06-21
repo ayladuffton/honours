@@ -23,6 +23,7 @@ class TicketDetailWidget extends StatefulWidget {
 }
 
 class _TicketDetailWidgetState extends State<TicketDetailWidget> {
+  bool archivedCheckboxListTileValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -237,9 +238,33 @@ class _TicketDetailWidgetState extends State<TicketDetailWidget> {
                               style: FlutterFlowTheme.of(context).bodyText1,
                             ),
                           ),
-                          Text(
-                            'Archive:  ${ticketDetailTicketsRecord.archive.toString()}',
-                            style: FlutterFlowTheme.of(context).bodyText1,
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 100, 0),
+                              child: Theme(
+                                data: ThemeData(
+                                  unselectedWidgetColor: Color(0xFF95A1AC),
+                                ),
+                                child: CheckboxListTile(
+                                  value: archivedCheckboxListTileValue ??=
+                                      ticketDetailTicketsRecord.archive,
+                                  onChanged: (newValue) => setState(() =>
+                                      archivedCheckboxListTileValue = newValue),
+                                  title: Text(
+                                    'Archived:',
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyText1,
+                                  ),
+                                  tileColor: Color(0xFFF5F5F5),
+                                  activeColor:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                  dense: false,
+                                  controlAffinity:
+                                      ListTileControlAffinity.trailing,
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),

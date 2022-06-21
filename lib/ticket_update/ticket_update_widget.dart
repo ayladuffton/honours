@@ -36,7 +36,7 @@ class _TicketUpdateWidgetState extends State<TicketUpdateWidget> {
   String areaDropDownValue;
   String companyDropDownValue;
   String assignedDropDownValue;
-  TextEditingController archiveTextFieldController;
+  bool archivedCheckboxListTileValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -967,7 +967,7 @@ class _TicketUpdateWidgetState extends State<TicketUpdateWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       10, 0, 0, 0),
                                   child: Text(
-                                    'Archive:',
+                                    'Archived:',
                                     style:
                                         FlutterFlowTheme.of(context).bodyText1,
                                   ),
@@ -982,48 +982,29 @@ class _TicketUpdateWidgetState extends State<TicketUpdateWidget> {
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Expanded(
-                                  child: TextFormField(
-                                    controller: archiveTextFieldController ??=
-                                        TextEditingController(
-                                      text: ticketUpdateTicketsRecord.archive
-                                          .toString(),
-                                    ),
-                                    onChanged: (_) => EasyDebounce.debounce(
-                                      'archiveTextFieldController',
-                                      Duration(milliseconds: 2000),
-                                      () => setState(() {}),
-                                    ),
-                                    autofocus: true,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      hintText: 'Archive',
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 280, 0),
+                                    child: Theme(
+                                      data: ThemeData(
+                                        unselectedWidgetColor:
+                                            Color(0xFF95A1AC),
                                       ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                      child: CheckboxListTile(
+                                        value: archivedCheckboxListTileValue ??=
+                                            ticketUpdateTicketsRecord.archive,
+                                        onChanged: (newValue) => setState(() =>
+                                            archivedCheckboxListTileValue =
+                                                newValue),
+                                        tileColor: Color(0xFFF5F5F5),
+                                        activeColor:
+                                            FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                        dense: false,
+                                        controlAffinity:
+                                            ListTileControlAffinity.trailing,
                                       ),
-                                      contentPadding:
-                                          EdgeInsetsDirectional.fromSTEB(
-                                              12, 0, 12, 20),
                                     ),
-                                    style:
-                                        FlutterFlowTheme.of(context).bodyText1,
-                                    keyboardType: TextInputType.number,
                                   ),
                                 ),
                               ],
@@ -1049,8 +1030,7 @@ class _TicketUpdateWidgetState extends State<TicketUpdateWidget> {
                                     area: areaDropDownValue,
                                     company: companyDropDownValue,
                                     assigned: assignedDropDownValue,
-                                    archive: int.parse(
-                                        archiveTextFieldController?.text ?? ''),
+                                    archive: archivedCheckboxListTileValue,
                                     device:
                                         deviceTextFieldController?.text ?? '',
                                   );
