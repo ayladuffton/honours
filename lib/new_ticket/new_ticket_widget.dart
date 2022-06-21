@@ -1,3 +1,4 @@
+import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -33,7 +34,6 @@ class _NewTicketWidgetState extends State<NewTicketWidget> {
   TextEditingController deviceTextFieldController;
   String companyDropDownValue;
   String assignedDropDownValue;
-  bool archivedCheckboxListTileValue;
   TextEditingController infoTextTextFieldController;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -701,34 +701,6 @@ class _NewTicketWidgetState extends State<NewTicketWidget> {
                               hidesUnderline: true,
                             ),
                           ),
-                          Expanded(
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 20, 10),
-                              child: Theme(
-                                data: ThemeData(
-                                  unselectedWidgetColor: Color(0xFF95A1AC),
-                                ),
-                                child: CheckboxListTile(
-                                  value: archivedCheckboxListTileValue ??=
-                                      false,
-                                  onChanged: (newValue) => setState(() =>
-                                      archivedCheckboxListTileValue = newValue),
-                                  title: Text(
-                                    'Archived:',
-                                    style:
-                                        FlutterFlowTheme.of(context).bodyText1,
-                                  ),
-                                  tileColor: Color(0xFFF5F5F5),
-                                  activeColor:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  dense: false,
-                                  controlAffinity:
-                                      ListTileControlAffinity.trailing,
-                                ),
-                              ),
-                            ),
-                          ),
                         ],
                       ),
                       Row(
@@ -809,7 +781,6 @@ class _NewTicketWidgetState extends State<NewTicketWidget> {
                                 area: areaDropDownValue,
                                 company: companyDropDownValue,
                                 assigned: assignedDropDownValue,
-                                archive: archivedCheckboxListTileValue,
                                 infoText: infoTextTextFieldController.text,
                               );
                               await TicketsRecord.collection

@@ -1,3 +1,4 @@
+import '../auth/auth_util.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -14,16 +15,16 @@ class LoginScreenWidget extends StatefulWidget {
 }
 
 class _LoginScreenWidgetState extends State<LoginScreenWidget> {
-  TextEditingController textController1;
-  TextEditingController textController2;
+  TextEditingController emailTextController;
+  TextEditingController passwordTextController;
   bool passwordVisibility;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    textController1 = TextEditingController();
-    textController2 = TextEditingController();
+    emailTextController = TextEditingController();
+    passwordTextController = TextEditingController();
     passwordVisibility = false;
   }
 
@@ -72,7 +73,7 @@ class _LoginScreenWidgetState extends State<LoginScreenWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Username',
+                    'Email',
                     textAlign: TextAlign.center,
                     style: FlutterFlowTheme.of(context).bodyText1,
                   ),
@@ -87,9 +88,9 @@ class _LoginScreenWidgetState extends State<LoginScreenWidget> {
                     child: Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(30, 10, 30, 20),
                       child: TextFormField(
-                        controller: textController1,
+                        controller: emailTextController,
                         onChanged: (_) => EasyDebounce.debounce(
-                          'textController1',
+                          'emailTextController',
                           Duration(milliseconds: 2000),
                           () => setState(() {}),
                         ),
@@ -141,9 +142,9 @@ class _LoginScreenWidgetState extends State<LoginScreenWidget> {
                     child: Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(30, 10, 30, 20),
                       child: TextFormField(
-                        controller: textController2,
+                        controller: passwordTextController,
                         onChanged: (_) => EasyDebounce.debounce(
-                          'textController2',
+                          'passwordTextController',
                           Duration(milliseconds: 2000),
                           () => setState(() {}),
                         ),
@@ -191,37 +192,53 @@ class _LoginScreenWidgetState extends State<LoginScreenWidget> {
                   ),
                 ],
               ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FFButtonWidget(
-                    onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => TicketListWidget(),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                      child: FFButtonWidget(
+                        onPressed: () async {
+                          final user = await signInWithEmail(
+                            context,
+                            emailTextController.text,
+                            passwordTextController.text,
+                          );
+                          if (user == null) {
+                            return;
+                          }
+
+                          await Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TicketListWidget(),
+                            ),
+                            (r) => false,
+                          );
+                        },
+                        text: 'Login',
+                        options: FFButtonOptions(
+                          width: 130,
+                          height: 40,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                          textStyle:
+                              FlutterFlowTheme.of(context).subtitle2.override(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.white,
+                                  ),
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1,
+                          ),
+                          borderRadius: 12,
                         ),
-                      );
-                    },
-                    text: 'Login',
-                    options: FFButtonOptions(
-                      width: 130,
-                      height: 40,
-                      color: FlutterFlowTheme.of(context).primaryColor,
-                      textStyle:
-                          FlutterFlowTheme.of(context).subtitle2.override(
-                                fontFamily: 'Poppins',
-                                color: Colors.white,
-                              ),
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                        width: 1,
                       ),
-                      borderRadius: 12,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
