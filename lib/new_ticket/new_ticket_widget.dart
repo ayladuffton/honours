@@ -782,6 +782,7 @@ class _NewTicketWidgetState extends State<NewTicketWidget> {
                                 company: companyDropDownValue,
                                 assigned: assignedDropDownValue,
                                 infoText: infoTextTextFieldController.text,
+                                archive: false,
                               );
                               await TicketsRecord.collection
                                   .doc()

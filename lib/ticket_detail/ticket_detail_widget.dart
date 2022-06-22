@@ -341,8 +341,9 @@ class _TicketDetailWidgetState extends State<TicketDetailWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                       child: StreamBuilder<List<NotesRecord>>(
                         stream: queryNotesRecord(
-                          queryBuilder: (notesRecord) =>
-                              notesRecord.orderBy('date', descending: true),
+                          queryBuilder: (notesRecord) => notesRecord
+                              .where('ref', isEqualTo: widget.ticketDocRef)
+                              .orderBy('date', descending: true),
                         ),
                         builder: (context, snapshot) {
                           // Customize what your widget looks like when it's loading.
